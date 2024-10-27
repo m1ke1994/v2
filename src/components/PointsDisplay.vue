@@ -69,10 +69,10 @@ export default {
     </div>
   </div>
   <div class="flex justify-between p-2 items-center">
-    <div class="flex gap-4 m-4 p-2 items-center">
+    <!-- <div class="flex gap-4 m-4 p-2 items-center">
       <p><input type="checkbox" id="option2" :checked="allPointsSelected" @change="togglePointAll"></p>
       <label for="option2">Выбрать все ({{ lengthPointsTrue }})</label>
-    </div>
+    </div> -->
     <div>
       <img class="cursor-pointer hover:scale-125 transition ease-in duration-300" src="/create.png" alt="create"
         @click="createPoint">

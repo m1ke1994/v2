@@ -5,9 +5,9 @@ export const usePointsStore = defineStore('points', {
   state: () => ({
     points: JSON.parse(localStorage.getItem('points')) || [], // Массив точек
     allPointsSelected: JSON.parse(localStorage.getItem('allPointsSelected')) || false, // Состояние для выбора всех точек
-    searchQuery: '', // Строка поиска
-    activePoint: null, // Состояние для активной точки
-    searchResults: [] // Результаты поиска
+    searchQuery: '', 
+    activePoint: null, 
+    searchResults: [] 
   }),
   actions: {
     // Генерация точек
@@ -50,6 +50,19 @@ export const usePointsStore = defineStore('points', {
     },
     toggleAllPoints() {
       this.allPointsSelected = !this.allPointsSelected;
+    
+      // Переключаем состояние первых 100 точек
+      const selectedPoints = this.points.slice(0, 100);
+      selectedPoints.forEach(point => {
+        point.selected = this.allPointsSelected;
+        point.activePoint = this.allPointsSelected && point.id === this.points[0].id;
+      });
+    
+      this.savePointsToLocalStorage();
+      localStorage.setItem('allPointsSelected', JSON.stringify(this.allPointsSelected)); // Сохраняем состояние allPointsSelected в localStorage
+    },
+ /*    toggleAllPoints() {
+      this.allPointsSelected = !this.allPointsSelected;
       this.points.forEach(point => {
         point.selected = this.allPointsSelected;
         if (this.allPointsSelected) {
@@ -60,7 +73,7 @@ export const usePointsStore = defineStore('points', {
       });
       this.savePointsToLocalStorage(); 
       localStorage.setItem('allPointsSelected', JSON.stringify(this.allPointsSelected)); // Сохраняем состояние allPointsSelected в localStorage
-    },
+    }, */
     // Установка активной точки
     setActivePoint(pointId) {
       this.points.forEach(point => {
