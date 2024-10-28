@@ -13,8 +13,8 @@ export const usePointsStore = defineStore('points', {
     // Генерация точек
     async generatePoints() {
       if (this.points.length === 0) {
-        const batchSize = 500; // Размер пакета
-        const totalPoints = 10000; // Общее количество точек
+        const batchSize = 100; // Размер пакета
+        const totalPoints = 1000; // Общее количество точек
 
         for (let i = 0; i < totalPoints; i += batchSize) {
           const batch = Array.from({ length: batchSize }, (_, j) => {
@@ -48,20 +48,8 @@ export const usePointsStore = defineStore('points', {
         }
       }
     },
+    
     toggleAllPoints() {
-      this.allPointsSelected = !this.allPointsSelected;
-    
-      // Переключаем состояние первых 100 точек
-      const selectedPoints = this.points.slice(0, 100);
-      selectedPoints.forEach(point => {
-        point.selected = this.allPointsSelected;
-        point.activePoint = this.allPointsSelected && point.id === this.points[0].id;
-      });
-    
-      this.savePointsToLocalStorage();
-      localStorage.setItem('allPointsSelected', JSON.stringify(this.allPointsSelected)); // Сохраняем состояние allPointsSelected в localStorage
-    },
- /*    toggleAllPoints() {
       this.allPointsSelected = !this.allPointsSelected;
       this.points.forEach(point => {
         point.selected = this.allPointsSelected;
@@ -73,7 +61,7 @@ export const usePointsStore = defineStore('points', {
       });
       this.savePointsToLocalStorage(); 
       localStorage.setItem('allPointsSelected', JSON.stringify(this.allPointsSelected)); // Сохраняем состояние allPointsSelected в localStorage
-    }, */
+    },
     // Установка активной точки
     setActivePoint(pointId) {
       this.points.forEach(point => {
